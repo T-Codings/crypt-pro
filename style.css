@@ -1910,7 +1910,8 @@ overflow: hidden;
         margin-top: 0px;
       }
 
-      .ellipse-307 {
+     
+          .ellipse-307 {
         margin-top: -60px;
         margin-left: 50%;
       }
@@ -1920,15 +1921,21 @@ overflow: hidden;
         margin-left: -80px;
       }
 
-      .ellipse-309, .ellipse-310,
-      .ellipse-310 > img, .ellipse-310 img,
-       .tiktok + img, .btc {
-        display: none;
-      }
+      
+    
 
         .tiktok  {
         margin-top: 220px;
         margin-left: 80px;
+      }
+  .btc {
+        display: none;
+      }
+
+        .ellipse-309, .ellipse-310,
+      .ellipse-310 > img, .ellipse-310 img,
+       .tiktok + img {
+        display: none;
       }
 
       /* === FOOTER === */

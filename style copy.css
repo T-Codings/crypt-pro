@@ -2095,3 +2095,12 @@ overflow: hidden;
         margin-top: 220px;
         margin-left: 80px;
       }
+  .btc {
+        display: none;
+      }
+
+        .ellipse-309, .ellipse-310,
+      .ellipse-310 > img, .ellipse-310 img,
+       .tiktok + img {
+        display: none;
+      }
