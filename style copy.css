@@ -1721,7 +1721,7 @@ overflow: hidden;
         text-align: center;
         margin: 10px auto;
         font-size: 28px;
-        width: 90%;
+        width: 60%;
       }
 
       .feature-security p {
@@ -1732,7 +1732,7 @@ overflow: hidden;
       }
 
       .get-started-intro {
-        width: 90%;
+        width: 60%;
         font-size: 18px;
         line-height: 1.3;
         margin-top: 40px;
@@ -1780,7 +1780,7 @@ overflow: hidden;
       }
 
       .masonry-grid-section h1 {
-        width: 70%;
+        width: 50%;
         font-size: 36px;
         margin-top: 30px;
       }
@@ -1887,7 +1887,7 @@ overflow: hidden;
         height: auto;
         position: absolute;
         margin: 0;
-        top: 30px;
+        top: 10px;
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
@@ -1900,7 +1900,7 @@ overflow: hidden;
         font-size: 35px;
         text-align: center;
         margin-left: 30px;
-        margin-top: 7140px;
+        margin-top: 7040px;
       }
 
       .cta-button {
@@ -1920,11 +1920,8 @@ overflow: hidden;
         margin-left: -80px;
       }
 
-      .ellipse-309, .ellipse-310,
-      .ellipse-310 > img, .ellipse-310 img,
-       .tiktok + img, .btc {
-        display: none;
-      }
+      
+    
 
         .tiktok  {
         margin-top: 220px;
@@ -2036,3 +2033,65 @@ overflow: hidden;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      .cta-div {
+        width: 85%;
+        height: auto;
+        position: absolute;
+        margin: 0;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 2;
+      }
+
+      .cta-header {
+        width: 80%;
+        height: auto;
+        font-size: 35px;
+        text-align: center;
+        margin-left: 30px;
+        margin-top: 7040px;
+      }
+
+      .cta-button {
+        width: 80%;
+        max-width: 280px;
+        margin-left: 0;
+        margin-top: 0px;
+      }
+
+      .ellipse-307 {
+        margin-top: -60px;
+        margin-left: 50%;
+      }
+
+      .ellipse-308 {
+        margin-top: -130px;
+        margin-left: -80px;
+      }
+
+      
+    
+
+        .tiktok  {
+        margin-top: 220px;
+        margin-left: 80px;
+      }
