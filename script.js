@@ -187,3 +187,10 @@ const statObserver = new IntersectionObserver(
 document.querySelectorAll(".stat-number").forEach((el) => {
   statObserver.observe(el);
 });
+
+
+
+
+
+
+
