@@ -1,0 +1,8 @@
+{
+  "name": "crypt-pro",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"Static site detected: no build step required.\""
+  }
+}
