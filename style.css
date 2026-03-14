@@ -1423,6 +1423,51 @@ overflow: hidden;
         font-size: 20px;
       }
 
+      /* ── Converter input/select fixes for mobile ── */
+      .crypto-convertor .input-box {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-height: 48px;
+      }
+
+      /* Currency dropdowns: give them a fixed width and make them tappable */
+      .crypto-convertor select {
+        min-width: 65px;
+        max-width: 80px;
+        flex-shrink: 0;
+        font-size: 16px;         /* prevent iOS auto-zoom */
+        -webkit-appearance: auto;
+        appearance: auto;
+        color: black;
+        background: transparent;
+        border: none;
+        outline: none;
+        padding: 4px 2px;
+        cursor: pointer;
+      }
+
+      /* Number fields: fill remaining space and stay readable */
+      .crypto-convertor input[type="number"] {
+        flex: 1 1 0;
+        min-width: 0;
+        width: 100%;
+        font-size: 16px;         /* prevent iOS auto-zoom */
+        -webkit-appearance: none;
+        appearance: textfield;
+        color: black;
+        background: transparent;
+        border: none;
+        outline: none;
+        padding: 4px 2px;
+      }
+
+      /* Hide browser spin buttons on number inputs */
+      .crypto-convertor input[type="number"]::-webkit-inner-spin-button,
+      .crypto-convertor input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
       .crypto-footer {
         gap: 12px;
         flex-wrap: wrap;
