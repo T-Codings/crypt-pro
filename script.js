@@ -1,200 +1,212 @@
 const hamburger = document.getElementById("hamburger");
 const navMenu = document.getElementById("navMenu");
-const links = navMenu.querySelectorAll("a, button");
 
-// Toggle menu open/close
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navMenu.classList.toggle("active");
-});
-
-// Auto close when clicking a link or button
-links.forEach((link) => {
-  link.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navMenu.classList.remove("active");
+if (hamburger && navMenu) {
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active");
   });
-});
-
-const currencies = [
-  { code: "USD", flag: "us" },
-  { code: "EUR", flag: "eu" },
-  { code: "GBP", flag: "gb" },
-  { code: "JPY", flag: "jp" },
-  { code: "CNY", flag: "cn" },
-  { code: "CHF", flag: "ch" },
-  { code: "CAD", flag: "ca" },
-  { code: "AUD", flag: "au" },
-  { code: "NZD", flag: "nz" },
-  { code: "SGD", flag: "sg" },
-  { code: "SEK", flag: "se" },
-  { code: "NOK", flag: "no" },
-  { code: "PLN", flag: "pl" },
-  { code: "ZAR", flag: "za" },
-  { code: "NGN", flag: "ng" },
-  { code: "EGP", flag: "eg" },
-  { code: "GHS", flag: "gh" },
-  { code: "KES", flag: "ke" },
-  { code: "INR", flag: "in" },
-  { code: "BRL", flag: "br" },
-  { code: "RUB", flag: "ru" },
-  { code: "MXN", flag: "mx" },
-  { code: "HKD", flag: "hk" },
-  { code: "KRW", flag: "kr" },
-  { code: "TRY", flag: "tr" },
-  { code: "AED", flag: "ae" },
-  { code: "SAR", flag: "sa" },
-  { code: "DKK", flag: "dk" },
-  { code: "CZK", flag: "cz" },
-  { code: "HUF", flag: "hu" },
-  { code: "RON", flag: "ro" },
-  { code: "BGN", flag: "bg" },
-  { code: "HRK", flag: "hr" },
-  { code: "XAF", flag: "cm" },
-  { code: "GHS", flag: "gh" },
-  { code: "ZAR", flag: "za" },
-  { code: "NGN", flag: "ng" },
-  { code: "MZN", flag: "mz" },
-  { code: "KES", flag: "ke" },
-  { code: "UGX", flag: "ug" },
-  { code: "TZS", flag: "tz" },
-  { code: "RWF", flag: "rw" },
-  { code: "MAD", flag: "ma" },
-];
-
-const fromSelect = document.getElementById("fromCurrency");
-const toSelect = document.getElementById("toCurrency");
-const amountInput = document.getElementById("amount");
-const convertedInput = document.getElementById("convertedAmount");
-const fromFlag = document.getElementById("fromFlag");
-const toFlag = document.getElementById("toFlag");
-
-const apiKey = "2160ef172d31c6f4af2eb5a8"; // Replace with your ExchangeRate API key
-const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/pair/`;
-
-// Populate selects
-currencies.forEach((c) => {
-  const opt1 = document.createElement("option");
-  opt1.value = c.code;
-  opt1.textContent = c.code;
-  fromSelect.appendChild(opt1);
-  const opt2 = document.createElement("option");
-  opt2.value = c.code;
-  opt2.textContent = c.code;
-  toSelect.appendChild(opt2);
-});
-
-// Update flags
-function updateFlags() {
-  const from = currencies.find((c) => c.code === fromSelect.value);
-  const to = currencies.find((c) => c.code === toSelect.value);
-  fromFlag.src = `https://flagcdn.com/w20/${from.flag}.png`;
-  toFlag.src = `https://flagcdn.com/w20/${to.flag}.png`;
 }
 
-// Convert currency using API
-async function convertCurrency(isFrom = true) {
-  const from = fromSelect.value;
-  const to = toSelect.value;
-  const amount = isFrom
-    ? parseFloat(amountInput.value)
-    : parseFloat(convertedInput.value);
-  if (!amount) return;
-  try {
-    const response = await fetch(`${apiUrl}${from}/${to}/${amount}`);
-    const data = await response.json();
-    if (data.result === "success") {
-      if (isFrom) convertedInput.value = data.conversion_result.toFixed(2);
-      else amountInput.value = data.conversion_result.toFixed(2);
+/* ========= CURRENCY CONVERTER ========= */
+const fromCurrency = document.getElementById("fromCurrency");
+const toCurrency = document.getElementById("toCurrency");
+const fromFlag = document.getElementById("fromFlag");
+const toFlag = document.getElementById("toFlag");
+const amountInput = document.getElementById("amount");
+const convertedAmountInput = document.getElementById("convertedAmount");
+const dateInput = document.getElementById("date");
+const quickTargets = document.querySelectorAll(".crypto-footer h2");
+const converterMessage = document.getElementById("converterMessage");
+
+const currencies = {
+  USD: { name: "US Dollar", country: "US" },
+  EUR: { name: "Euro", country: "EU" },
+  GBP: { name: "British Pound", country: "GB" },
+  NGN: { name: "Nigerian Naira", country: "NG" },
+  XAF: { name: "Central African CFA Franc", country: "CM" },
+  CAD: { name: "Canadian Dollar", country: "CA" },
+  AUD: { name: "Australian Dollar", country: "AU" },
+  JPY: { name: "Japanese Yen", country: "JP" },
+  CHF: { name: "Swiss Franc", country: "CH" }
+};
+
+function getFlagUrl(countryCode) {
+  if (countryCode === "EU") {
+    return "https://flagcdn.com/w40/eu.png";
+  }
+  return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
+}
+
+function populateCurrencies() {
+  const codes = Object.keys(currencies);
+
+  codes.forEach((code) => {
+    const fromOption = document.createElement("option");
+    fromOption.value = code;
+    fromOption.textContent = code;
+
+    const toOption = document.createElement("option");
+    toOption.value = code;
+    toOption.textContent = code;
+
+    fromCurrency.appendChild(fromOption);
+    toCurrency.appendChild(toOption);
+  });
+
+  fromCurrency.value = "USD";
+  toCurrency.value = "EUR";
+  updateFlags();
+}
+
+function updateFlags() {
+  const fromCode = fromCurrency.value;
+  const toCode = toCurrency.value;
+
+  fromFlag.src = getFlagUrl(currencies[fromCode].country);
+  fromFlag.alt = `${fromCode} flag`;
+
+  toFlag.src = getFlagUrl(currencies[toCode].country);
+  toFlag.alt = `${toCode} flag`;
+}
+
+function setTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  dateInput.value = `${year}-${month}-${day}`;
+}
+
+function getApiDate() {
+  const selectedDate = dateInput.value;
+  if (selectedDate) {
+    return selectedDate;
+  }
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+async function convertCurrency() {
+  const from = fromCurrency.value;
+  const to = toCurrency.value;
+  const amount = parseFloat(amountInput.value);
+  const apiDate = getApiDate();
+
+  if (converterMessage) {
+    converterMessage.textContent = "";
+  }
+
+  if (!amountInput.value || isNaN(amount) || amount <= 0) {
+    convertedAmountInput.value = "";
+    return;
+  }
+
+  if (from === to) {
+    convertedAmountInput.value = amount.toFixed(2);
+    if (converterMessage) {
+      converterMessage.textContent = `1 ${from} = 1 ${to}`;
     }
-  } catch (err) {
-    console.error("Conversion error:", err);
+    return;
+  }
+
+  try {
+    convertedAmountInput.value = "Loading...";
+
+    const response = await fetch(
+      `https://api.frankfurter.app/${apiDate}?amount=${amount}&from=${from}&to=${to}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch exchange rate");
+    }
+
+    const data = await response.json();
+
+    if (data.rates && data.rates[to] !== undefined) {
+      const result = Number(data.rates[to]);
+      convertedAmountInput.value = result.toFixed(2);
+
+      if (converterMessage) {
+        converterMessage.textContent = `1 ${from} = ${(result / amount).toFixed(4)} ${to}`;
+      }
+    } else {
+      convertedAmountInput.value = "";
+      if (converterMessage) {
+        converterMessage.textContent = "Conversion not available.";
+      }
+    }
+  } catch (error) {
+    console.error("Currency conversion error:", error);
+    convertedAmountInput.value = "";
+    if (converterMessage) {
+      converterMessage.textContent =
+        "Unable to fetch rates right now. Check your internet connection.";
+    }
   }
 }
 
-// Event listeners
-// "input"  → fires on every keystroke (desktop + Android)
-// "change" → fires when iOS Safari keyboard is dismissed via Done
-amountInput.addEventListener("input",  () => convertCurrency(true));
-amountInput.addEventListener("change", () => convertCurrency(true));
-convertedInput.addEventListener("input",  () => convertCurrency(false));
-convertedInput.addEventListener("change", () => convertCurrency(false));
-fromSelect.addEventListener("change", () => {
-  updateFlags();
-  convertCurrency(true);
-});
-toSelect.addEventListener("change", () => {
-  updateFlags();
-  convertCurrency(true);
-});
+if (fromCurrency && toCurrency && amountInput && convertedAmountInput && dateInput) {
+  populateCurrencies();
+  setTodayDate();
 
-// Footer shortcuts
-document.querySelectorAll(".crypto-footer h2").forEach((h) => {
-  h.addEventListener("click", () => {
-    toSelect.value = h.textContent;
+  fromCurrency.addEventListener("change", () => {
     updateFlags();
-    convertCurrency(true);
+    convertCurrency();
   });
-});
 
-// Initialize
-fromSelect.value = "USD";
-toSelect.value = "EUR";
-updateFlags();
+  toCurrency.addEventListener("change", () => {
+    updateFlags();
+    convertCurrency();
+  });
 
-// ===== Statistic Counter Animation =====
-function animateCounter(el) {
-  const target = parseInt(el.dataset.target, 10);
-  const suffix = el.dataset.suffix || "";
-  const duration = 4000; // ms
-  const frameRate = 60;
-  const totalFrames = Math.round((duration / 1000) * frameRate);
-  const displayValue = (val) => {
-    const k = Math.round(val / 1000);
-    return k + suffix;
-  };
-  // Cancel any in-progress animation before starting a new one
-  if (el._animFrame) cancelAnimationFrame(el._animFrame);
-  let frame = 0;
-  const step = () => {
-    frame++;
-    const progress = 1 - Math.pow(1 - frame / totalFrames, 3);
-    el.textContent = displayValue(target * progress);
-    if (frame < totalFrames) {
-      el._animFrame = requestAnimationFrame(step);
-    } else {
-      el.textContent = displayValue(target);
-      el._animFrame = null;
-    }
-  };
-  el._animFrame = requestAnimationFrame(step);
-}
+  amountInput.addEventListener("input", convertCurrency);
+  amountInput.addEventListener("change", convertCurrency); // iOS Safari: fires on keyboard dismiss
 
-const statObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-      } else {
-        // Reset to 0 when scrolled out so it re-animates on next entry
-        if (entry.target._animFrame) {
-          cancelAnimationFrame(entry.target._animFrame);
-          entry.target._animFrame = null;
-        }
-        entry.target.textContent = "0";
+  dateInput.addEventListener("change", () => {
+    convertCurrency();
+  });
+
+  quickTargets.forEach((item) => {
+    item.addEventListener("click", () => {
+      const quickCode = item.dataset.quick;
+      if (quickCode && currencies[quickCode]) {
+        toCurrency.value = quickCode;
+        updateFlags();
+        convertCurrency();
       }
     });
-  },
-  { threshold: 0.4 }
-);
+  });
+}
 
-document.querySelectorAll(".stat-number").forEach((el) => {
-  statObserver.observe(el);
-});
+/* ========= SIMPLE STAT COUNTER ========= */
+const statNumbers = document.querySelectorAll(".stat-number");
 
+function animateCounter(element) {
+  const target = Number(element.dataset.target || 0);
+  const suffix = element.dataset.suffix || "";
+  let current = 0;
+  const increment = Math.ceil(target / 100);
 
+  const update = () => {
+    current += increment;
 
+    if (current >= target) {
+      element.textContent = `${Math.floor(target / 1000)}${suffix}`;
+      return;
+    }
 
+    element.textContent = `${Math.floor(current / 1000)}${suffix}`;
+    requestAnimationFrame(update);
+  };
 
+  update();
+}
 
-
+if (statNumbers.length) {
+  statNumbers.forEach((item) => animateCounter(item));
+}
