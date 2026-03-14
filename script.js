@@ -112,16 +112,13 @@ async function convertCurrency(isFrom = true) {
   }
 }
 
-// Auto-convert on every keystroke (desktop) and on "change" (mobile/iOS Safari
-// fires "change" when the virtual keyboard is dismissed via Done).
-function onAmountInput() { convertCurrency(true); }
-function onConvertedInput() { convertCurrency(false); }
-
-amountInput.addEventListener("input", onAmountInput);
-amountInput.addEventListener("change", onAmountInput);
-convertedInput.addEventListener("input", onConvertedInput);
-convertedInput.addEventListener("change", onConvertedInput);
-
+// Event listeners
+// "input"  → fires on every keystroke (desktop + Android)
+// "change" → fires when iOS Safari keyboard is dismissed via Done
+amountInput.addEventListener("input",  () => convertCurrency(true));
+amountInput.addEventListener("change", () => convertCurrency(true));
+convertedInput.addEventListener("input",  () => convertCurrency(false));
+convertedInput.addEventListener("change", () => convertCurrency(false));
 fromSelect.addEventListener("change", () => {
   updateFlags();
   convertCurrency(true);
