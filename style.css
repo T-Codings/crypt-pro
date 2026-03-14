@@ -221,10 +221,10 @@ nav a:hover {
 }
 
 /* ============================================================
-   CURRENCY CONVERTER — DESKTOP STYLES
-   (all screen widths; overridden for mobile below)
+   CURRENCY CONVERTER — DESKTOP
+   (applies to all screen sizes as the base; mobile overrides
+    are inside @media (max-width: 768px) further below)
    ============================================================ */
-
 .crypto-convertor {
   width: 380px;
   padding: 30px;
@@ -238,7 +238,7 @@ nav a:hover {
   box-sizing: border-box;
 }
 
-/* Title */
+/* Converter title */
 .crypto-convertor h1 {
   color: #fff;
   font-family: "Yukita Sans";
@@ -249,7 +249,7 @@ nav a:hover {
   margin-top: 0;
 }
 
-/* Field labels */
+/* Labels */
 .amount,
 .convert {
   font-family: "Yukita Sans";
@@ -259,12 +259,12 @@ nav a:hover {
   color: #ffffff;
 }
 
-/* Form group spacing */
+/* Form groups */
 .form-group {
   margin-bottom: 20px;
 }
 
-/* Row that holds flag + select side-by-side */
+/* UPDATED CONVERTER LAYOUT */
 .converter-row {
   display: flex;
   align-items: center;
@@ -279,7 +279,7 @@ nav a:hover {
   flex-shrink: 0;
 }
 
-/* White pill that wraps flag + select + number input */
+/* Input wrapper */
 .input-box {
   display: flex;
   align-items: center;
@@ -290,7 +290,7 @@ nav a:hover {
   box-sizing: border-box;
 }
 
-/* Base for all inputs + selects */
+/* Input + select */
 input,
 select {
   font-size: 14px;
@@ -300,22 +300,18 @@ select {
   color: black;
 }
 
-/* Currency dropdowns */
-.input-box select {
-  flex: 0 0 auto;
-  min-width: 60px;
-  max-width: 80px;
-  cursor: pointer;
+/* Number input */
+input[type="number"] {
+  width: 100%;
 }
 
-/* Amount / converted number fields */
 #amount,
 #convertedAmount {
   flex: 1;
   min-width: 0;
 }
 
-/* Date picker */
+/* Date input */
 input[type="date"] {
   width: 100%;
   padding: 5px;
@@ -327,16 +323,15 @@ input[type="date"] {
   width: 100%;
 }
 
-/* Flag images */
+/* Flag icons */
 .flag {
   width: 25px;
   height: 25px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
 }
 
-/* Status / error message row */
+/* Converter message */
 .converter-message {
   min-height: 18px;
   margin-top: -8px;
@@ -346,7 +341,7 @@ input[type="date"] {
   font-size: 13px;
 }
 
-/* Quick-select footer links (EUR / GBP / BTC) */
+/*CONVERTER FOOTER*/
 .crypto-footer {
   display: flex;
   gap: 7px;
@@ -1410,33 +1405,15 @@ footer {
   }
 
   /* ============================================================
-     CURRENCY CONVERTER — MOBILE OVERRIDES (max-width: 768px)
+     CURRENCY CONVERTER — MOBILE (max-width: 768px)
+     Overrides the desktop base styles above
      ============================================================ */
-
-  /* Container: full width, no left margin */
-  .crypto-convertor {
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
-    background: #ffffff33;
-    backdrop-filter: blur(10px);
-    text-align: left;
-    margin-left: 0;
-  }
-
-  .crypto-convertor h1 {
-    font-size: 20px;
-  }
-
-  /* Input pills: taller touch targets */
   .crypto-convertor .input-box {
     width: 100%;
     min-height: 52px;
     align-items: center;
   }
 
-  /* Preserve side-by-side layout of select + input on small screens */
   .converter-row {
     flex-direction: row;
     align-items: center;
@@ -1449,13 +1426,12 @@ footer {
     flex-shrink: 0;
   }
 
-  /* Currency dropdown: 16px stops iOS Safari from auto-zooming the page */
   .crypto-convertor select {
     min-width: 65px;
     max-width: 80px;
     flex-shrink: 0;
     font-size: 16px;
-    -webkit-appearance: auto;  /* show native OS picker arrow */
+    -webkit-appearance: auto;
     appearance: auto;
     color: black;
     background: transparent;
@@ -1465,7 +1441,6 @@ footer {
     cursor: pointer;
   }
 
-  /* Number fields: 16px stops iOS Safari auto-zoom; fills remaining width */
   .crypto-convertor input[type="number"] {
     flex: 1 1 0;
     min-width: 0;
@@ -1480,21 +1455,16 @@ footer {
     padding: 4px 2px;
   }
 
-  /* Hide spin buttons on mobile */
   .crypto-convertor input[type="number"]::-webkit-inner-spin-button,
   .crypto-convertor input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  /* Date picker: 16px stops iOS auto-zoom; ensure text is visible */
   .crypto-convertor input[type="date"] {
     width: 100%;
     font-size: 16px;
     min-height: 34px;
-    color: black;
-    -webkit-appearance: none;
-    appearance: none;
   }
 
   .date-input-box {
@@ -1505,7 +1475,6 @@ footer {
     font-size: 12px;
   }
 
-  /* Footer quick-select chips */
   .crypto-footer {
     gap: 12px;
     flex-wrap: wrap;
@@ -1515,7 +1484,6 @@ footer {
     font-size: 14px;
   }
 
-  /* Hide decorative camera images on mobile */
   .cam1, .cam2 {
     display: none;
   }
@@ -2102,6 +2070,10 @@ footer {
   }
 }
 
+/* ============================================================
+   CURRENCY CONVERTER — EXTRA-SMALL MOBILE (max-width: 480px)
+   Stack currency selector above the number field on tiny screens
+   ============================================================ */
 @media (max-width: 480px) {
   .converter-row {
     flex-direction: column;
