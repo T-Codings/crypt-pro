@@ -112,9 +112,16 @@ async function convertCurrency(isFrom = true) {
   }
 }
 
-// Event listeners
-amountInput.addEventListener("input", () => convertCurrency(true));
-convertedInput.addEventListener("input", () => convertCurrency(false));
+// Use both "input" and "change" so conversion fires on mobile (iOS Safari
+// only fires "change" when the virtual keyboard is dismissed via Done).
+function onAmountInput() { convertCurrency(true); }
+function onConvertedInput() { convertCurrency(false); }
+
+amountInput.addEventListener("input", onAmountInput);
+amountInput.addEventListener("change", onAmountInput);
+convertedInput.addEventListener("input", onConvertedInput);
+convertedInput.addEventListener("change", onConvertedInput);
+
 fromSelect.addEventListener("change", () => {
   updateFlags();
   convertCurrency(true);
@@ -123,6 +130,40 @@ toSelect.addEventListener("change", () => {
   updateFlags();
   convertCurrency(true);
 });
+
+// ── Mobile Convert Button ──────────────────────────────────────────────────
+// Inject a "Convert" button inside the converter card so mobile users have
+// a reliable tap target (touch "done" on keyboard + button covers all cases).
+(function injectConvertButton() {
+  const convertor = document.querySelector(".crypto-convertor");
+  if (!convertor) return;
+
+  const btn = document.createElement("button");
+  btn.textContent = "Convert";
+  btn.id = "convertBtn";
+  Object.assign(btn.style, {
+    display: "block",
+    width: "100%",
+    padding: "12px",
+    marginTop: "12px",
+    background: "#2752e7",
+    color: "#fff",
+    border: "none",
+    borderRadius: "10px",
+    fontSize: "16px",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: "600",
+    cursor: "pointer",
+    letterSpacing: "0.3px",
+  });
+
+  // Insert before the footer / decorative image
+  const footer = convertor.querySelector(".crypto-footer");
+  convertor.insertBefore(btn, footer);
+
+  btn.addEventListener("click", () => convertCurrency(true));
+  btn.addEventListener("touchend", (e) => { e.preventDefault(); convertCurrency(true); });
+})();
 
 // Footer shortcuts
 document.querySelectorAll(".crypto-footer h2").forEach((h) => {

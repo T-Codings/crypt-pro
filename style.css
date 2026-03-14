@@ -293,8 +293,10 @@ input[type="number"] {
 
 /* Date input */
 input[type="date"] {
+  width: 100%;
   padding: 5px;
   border-radius: 5px;
+  color: black;
 }
 
 /* Flag icons */
@@ -1114,7 +1116,8 @@ color: #FFFFFF;
 .footer-container {
     display: flex;
     flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
+  position: relative;
   width: 1029px;
   height: 620px;
   border-radius: 19.36px;
