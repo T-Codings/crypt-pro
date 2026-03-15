@@ -239,6 +239,7 @@ body {
   box-shadow: 0px 4px 16px 0px #0000000a;
   position: relative;
   z-index: 2;
+  isolation: isolate;
   margin-left: 40px;
   margin-top: 20px;
 }
@@ -277,6 +278,9 @@ body {
   border-radius: 10px;
   padding: 10px;
   gap: 10px;
+  min-height: 52px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Input + select */
@@ -287,17 +291,37 @@ select {
   outline: none;
   background: transparent;
   color: black;
+  min-width: 0;
+  pointer-events: auto;
+}
+
+.input-box select,
+.input-box input {
+  flex: 1 1 0;
+}
+
+select {
+  -webkit-appearance: menulist;
+  appearance: auto;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 /* Number input */
 input[type="number"] {
   width: 100%;
+  font-size: 16px;
 }
 
 /* Date input */
 input[type="date"] {
+  width: 100%;
+  min-height: 40px;
   padding: 5px;
   border-radius: 5px;
+  -webkit-appearance: auto;
+  appearance: auto;
+  font-size: 16px;
 }
 
 /* Flag icons */
@@ -1417,14 +1441,39 @@ overflow: hidden;
         margin: 0;
         padding: 20px;
         box-sizing: border-box;
-        background: #ffffff33;
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: none;
         text-align: left;
         margin-left: 0;
+        position: relative;
+        z-index: 3;
+        isolation: isolate;
+        overflow: visible;
       }
 
       .crypto-convertor h1 {
         font-size: 20px;
+      }
+
+      .form-group,
+      .input-box,
+      .input-box input,
+      .input-box select,
+      .input-box img {
+        position: relative;
+        z-index: 4;
+      }
+
+      .input-box {
+        min-height: 56px;
+      }
+
+      .input-box select {
+        min-width: 88px;
+      }
+
+      input[type="date"] {
+        display: block;
       }
 
       .crypto-footer {

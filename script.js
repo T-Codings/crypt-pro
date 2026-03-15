@@ -68,21 +68,24 @@ const amountInput = document.getElementById("amount");
 const convertedInput = document.getElementById("convertedAmount");
 const fromFlag = document.getElementById("fromFlag");
 const toFlag = document.getElementById("toFlag");
+const dateInput = document.getElementById("date");
 
 const apiKey = "2160ef172d31c6f4af2eb5a8"; // Replace with your ExchangeRate API key
 const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/pair/`;
 
 // Populate selects
-currencies.forEach((c) => {
-  const opt1 = document.createElement("option");
-  opt1.value = c.code;
-  opt1.textContent = c.code;
-  fromSelect.appendChild(opt1);
-  const opt2 = document.createElement("option");
-  opt2.value = c.code;
-  opt2.textContent = c.code;
-  toSelect.appendChild(opt2);
-});
+if (fromSelect && toSelect) {
+  currencies.forEach((c) => {
+    const opt1 = document.createElement("option");
+    opt1.value = c.code;
+    opt1.textContent = c.code;
+    fromSelect.appendChild(opt1);
+    const opt2 = document.createElement("option");
+    opt2.value = c.code;
+    opt2.textContent = c.code;
+    toSelect.appendChild(opt2);
+  });
+}
 
 // Update flags
 function updateFlags() {
@@ -148,6 +151,10 @@ toSelect.value = "EUR";
 updateFlags();
 amountInput.value = 1;
 convertCurrency(true);
+
+if (dateInput) {
+  dateInput.value = new Date().toISOString().split("T")[0];
+}
 
 // ===== Statistic Counter Animation =====
 function animateCounter(el) {
