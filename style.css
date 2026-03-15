@@ -227,41 +227,17 @@ body {
   cursor: pointer;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*CURRENCY CONVERTER SECTION */
 .crypto-convertor {
   width: 380px;
   padding: 30px;
   border-radius: 20px;
-  background: #ffffff33;
+  background: #ffffff33;              
   backdrop-filter: blur(20px);
   box-shadow: 0px 4px 16px 0px #0000000a;
   position: relative;
   margin-left: 40px;
   margin-top: 20px;
-  box-sizing: border-box;
 }
 
 /* Converter title */
@@ -298,21 +274,6 @@ body {
   border-radius: 10px;
   padding: 10px;
   gap: 10px;
-  box-sizing: border-box;
-}
-
-.converter-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.currency-select-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 118px;
-  flex-shrink: 0;
 }
 
 /* Input + select */
@@ -326,27 +287,14 @@ select {
 }
 
 /* Number input */
-#amount,
-#convertedAmount {
-  flex: 1;
-  min-width: 0;
-  width: 100%;
-}
-
 input[type="number"] {
   width: 100%;
 }
 
 /* Date input */
-.date-input-box {
-  width: 100%;
-}
-
 input[type="date"] {
-  width: 100%;
-  padding: 5px 0;
+  padding: 5px;
   border-radius: 5px;
-  color: black;
 }
 
 /* Flag icons */
@@ -354,7 +302,6 @@ input[type="date"] {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  flex-shrink: 0;
 }
 
 /*CONVERTER FOOTER*/
@@ -396,23 +343,6 @@ input[type="date"] {
   z-index: 1;
 }
 /*=========CRYPTO PAGE END=========*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1426,7 +1356,8 @@ overflow: hidden;
         padding: 30px 15px;
       }
 
-  
+      
+
       .left-right-section-div {
         flex-direction: column;
         align-items: center;
@@ -1473,197 +1404,35 @@ overflow: hidden;
 
       .get-started {
         width: 100%;
-        cursor: pointer;
       }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.crypto-convertor {
-  width: 100%;
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-  background: #ffffff33;
-  backdrop-filter: blur(10px);
-  text-align: left;
-  margin-left: 0;
-}
-
-.crypto-convertor h1 {
-  font-size: 20px;
-}
-
-.crypto-convertor .input-box {
-  width: 100%;
-  min-height: 52px;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.converter-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-}
-
-.currency-select-wrap {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  min-width: 108px;
-  max-width: 120px;
-  flex-shrink: 0;
-
-}
-
-.crypto-convertor select {
-  width: 50px;
-  flex-shrink: 2;
-  font-size: 16px;
-  -webkit-appearance: none;
-  appearance: none;
-  color: black;
-  background-color: transparent;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23333' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 4px center;
-  padding: 4px 20px 4px 2px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
-
-
-.crypto-convertor input[type="number"] {
-  flex: 1 1 0;
-  min-width: 0;
-  width: 100%;
-  font-size: 16px;
-  -webkit-appearance: none;
-  appearance: textfield;
-  color: rgb(0, 0, 0);
-  background:gold;
-  border: red solid 2px;
-  outline: none;
-  padding: 4px 2px ;
-}
-
-.crypto-convertor input[type="number"]::-webkit-inner-spin-button,
-.crypto-convertor input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.date-input-box {
-  width: 100%;
-}
-
-.crypto-convertor input[type="date"] {
-  width: 100%;
-  font-size: 16px;
-  min-height: 34px;
-}
-
-.crypto-footer {
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.crypto-footer h2 {
-  font-size: 14px;
-}
-
-.cam1,
-.cam2 {
-  display: none;
-}
-
-@media (max-width: 480px) {
-  .converter-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .currency-select-wrap {
-    min-width: 100%;
-    max-width: 100%;
-  }
-
-  .crypto-convertor select {
-    width: 100%;
-    max-width: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23333' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 4px center;
-    padding-right: 20px;
-  }
-
-  #amount,
-  #convertedAmount {
-    width: 100%;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      .crypto-convertor {
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        background: #ffffff33;
+        backdrop-filter: blur(10px);
+        text-align: left;
+        margin-left: 0;
+      }
+
+      .crypto-convertor h1 {
+        font-size: 20px;
+      }
+
+      .crypto-footer {
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .crypto-footer h2 {
+        font-size: 14px;
+      }
+
+      .cam1, .cam2 {
+        display: none;
+      }
 
       /* === STATISTICS === */
       .statistic-logo-div {

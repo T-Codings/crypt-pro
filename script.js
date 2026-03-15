@@ -51,11 +51,15 @@ const currencies = [
   { code: "BGN", flag: "bg" },
   { code: "HRK", flag: "hr" },
   { code: "XAF", flag: "cm" },
+  { code: "GHS", flag: "gh" },
+  { code: "ZAR", flag: "za" },
+  { code: "NGN", flag: "ng" },
   { code: "MZN", flag: "mz" },
+  { code: "KES", flag: "ke" },
   { code: "UGX", flag: "ug" },
   { code: "TZS", flag: "tz" },
   { code: "RWF", flag: "rw" },
-  { code: "MAD", flag: "ma" }
+  { code: "MAD", flag: "ma" },
 ];
 
 const fromSelect = document.getElementById("fromCurrency");
@@ -64,9 +68,8 @@ const amountInput = document.getElementById("amount");
 const convertedInput = document.getElementById("convertedAmount");
 const fromFlag = document.getElementById("fromFlag");
 const toFlag = document.getElementById("toFlag");
-const dateInput = document.getElementById("date");
 
-const apiKey = "2160ef172d31c6f4af2eb5a8";
+const apiKey = "2160ef172d31c6f4af2eb5a8"; // Replace with your ExchangeRate API key
 const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/pair/`;
 
 // Populate selects
@@ -75,29 +78,18 @@ currencies.forEach((c) => {
   opt1.value = c.code;
   opt1.textContent = c.code;
   fromSelect.appendChild(opt1);
-
   const opt2 = document.createElement("option");
   opt2.value = c.code;
   opt2.textContent = c.code;
   toSelect.appendChild(opt2);
 });
 
-// Set today date
-function setTodayDate() {
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const dd = String(today.getDate()).padStart(2, "0");
-  dateInput.value = `${yyyy}-${mm}-${dd}`;
-}
-
 // Update flags
 function updateFlags() {
   const from = currencies.find((c) => c.code === fromSelect.value);
   const to = currencies.find((c) => c.code === toSelect.value);
-
-  if (from) fromFlag.src = `https://flagcdn.com/w20/${from.flag}.png`;
-  if (to) toFlag.src = `https://flagcdn.com/w20/${to.flag}.png`;
+  fromFlag.src = `https://flagcdn.com/w20/${from.flag}.png`;
+  toFlag.src = `https://flagcdn.com/w20/${to.flag}.png`;
 }
 
 // Convert currency using API
@@ -107,26 +99,13 @@ async function convertCurrency(isFrom = true) {
   const amount = isFrom
     ? parseFloat(amountInput.value)
     : parseFloat(convertedInput.value);
-
-  if (!amount || Number.isNaN(amount)) {
-    if (isFrom) {
-      convertedInput.value = "";
-    } else {
-      amountInput.value = "";
-    }
-    return;
-  }
-
+  if (!amount) return;
   try {
     const response = await fetch(`${apiUrl}${from}/${to}/${amount}`);
     const data = await response.json();
-
     if (data.result === "success") {
-      if (isFrom) {
-        convertedInput.value = data.conversion_result.toFixed(2);
-      } else {
-        amountInput.value = data.conversion_result.toFixed(2);
-      }
+      if (isFrom) convertedInput.value = data.conversion_result.toFixed(2);
+      else amountInput.value = data.conversion_result.toFixed(2);
     }
   } catch (err) {
     console.error("Conversion error:", err);
@@ -136,37 +115,82 @@ async function convertCurrency(isFrom = true) {
 // Event listeners
 amountInput.addEventListener("input", () => convertCurrency(true));
 convertedInput.addEventListener("input", () => convertCurrency(false));
-
 fromSelect.addEventListener("change", () => {
   updateFlags();
   convertCurrency(true);
 });
-
 toSelect.addEventListener("change", () => {
   updateFlags();
-  convertCurrency(true);
-});
-
-dateInput.addEventListener("change", () => {
   convertCurrency(true);
 });
 
 // Footer shortcuts
 document.querySelectorAll(".crypto-footer h2").forEach((h) => {
   h.addEventListener("click", () => {
-    const target = h.textContent.trim();
-    const exists = currencies.some((c) => c.code === target);
-
-    if (exists) {
-      toSelect.value = target;
-      updateFlags();
-      convertCurrency(true);
-    }
+    toSelect.value = h.textContent;
+    updateFlags();
+    convertCurrency(true);
   });
 });
 
 // Initialize
 fromSelect.value = "USD";
 toSelect.value = "EUR";
-setTodayDate();
 updateFlags();
+
+// ===== Statistic Counter Animation =====
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const suffix = el.dataset.suffix || "";
+  const duration = 4000; // ms
+  const frameRate = 60;
+  const totalFrames = Math.round((duration / 1000) * frameRate);
+  const displayValue = (val) => {
+    const k = Math.round(val / 1000);
+    return k + suffix;
+  };
+  // Cancel any in-progress animation before starting a new one
+  if (el._animFrame) cancelAnimationFrame(el._animFrame);
+  let frame = 0;
+  const step = () => {
+    frame++;
+    const progress = 1 - Math.pow(1 - frame / totalFrames, 3);
+    el.textContent = displayValue(target * progress);
+    if (frame < totalFrames) {
+      el._animFrame = requestAnimationFrame(step);
+    } else {
+      el.textContent = displayValue(target);
+      el._animFrame = null;
+    }
+  };
+  el._animFrame = requestAnimationFrame(step);
+}
+
+const statObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+      } else {
+        // Reset to 0 when scrolled out so it re-animates on next entry
+        if (entry.target._animFrame) {
+          cancelAnimationFrame(entry.target._animFrame);
+          entry.target._animFrame = null;
+        }
+        entry.target.textContent = "0";
+      }
+    });
+  },
+  { threshold: 0.4 }
+);
+
+document.querySelectorAll(".stat-number").forEach((el) => {
+  statObserver.observe(el);
+});
+
+
+
+
+
+
+
