@@ -1,20 +1,30 @@
 ﻿const hamburger = document.getElementById("hamburger");
 const navMenu = document.getElementById("navMenu");
-const links = navMenu.querySelectorAll("a, button");
 
-// Toggle menu open/close
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navMenu.classList.toggle("active");
-});
-
-// Auto close when clicking a link or button
-links.forEach((link) => {
-  link.addEventListener("click", () => {
+if (hamburger && navMenu) {
+  const links = navMenu.querySelectorAll("a, button");
+  const closeMenu = () => {
     hamburger.classList.remove("active");
     navMenu.classList.remove("active");
+    hamburger.setAttribute("aria-expanded", "false");
+  };
+
+  hamburger.addEventListener("click", () => {
+    const isOpen = hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active", isOpen);
+    hamburger.setAttribute("aria-expanded", String(isOpen));
   });
-});
+
+  links.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      closeMenu();
+    }
+  });
+}
 
 const currencies = [
   { code: "USD", flag: "us" },
