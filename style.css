@@ -87,9 +87,9 @@ body {
     .get-started-button {
       padding: 12px 24px;
       border-radius: 10px;
-      border: 1px solid #ffffff;
-      background-color: #2752e7;
-      color: #ffffff;
+      border: 1px solid #d9e1ff;
+      background-color: #ffffff;
+      color: #2752e7;
       font-weight: 600;
       cursor: pointer;
     
@@ -1457,7 +1457,7 @@ overflow: hidden;
 
       .get-started {
         width: 100%;
-        background-color: #eac41d;
+        background-color: #ffffff;
       }
 
       .crypto-convertor {
